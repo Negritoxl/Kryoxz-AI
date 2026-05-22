@@ -1,8 +1,9 @@
 import streamlit as st
 import os
 import google.genai as genai
+import time
 
-# Anahtarı kasanın içinden çeker
+# API anahtarını güvenli kasadan al
 api_key = st.secrets["GEMINI_API_KEY"]
 client = genai.Client(api_key=api_key)
 
@@ -22,8 +23,8 @@ if prompt := st.chat_input("Kryoxz AI'a bir şeyler yazın..."):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        # HATA YÖNETİMİ BURADA BAŞLIYOR
         try:
+            # Gemini'a bağlan
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=prompt,
@@ -31,11 +32,7 @@ if prompt := st.chat_input("Kryoxz AI'a bir şeyler yazın..."):
             st.markdown(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
         except Exception as e:
-            except Exception as e:
             if "429" in str(e):
-                st.warning("⚠️ Çok hızlı istek gönderildi. Sistem 60 saniye boyunca kendini soğutuyor...")
-                import time
-                time.sleep(60) # 1 dakika bekle
-                st.rerun() # Sayfayı otomatik yenile
+                st.warning("⚠️ Kota sınırı aşıldı! Lütfen 60 saniye bekleyip sayfayı yenile.")
             else:
                 st.error(f"Bir hata oluştu: {e}")
