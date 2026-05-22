@@ -32,7 +32,7 @@ st.markdown("""
 
 st.markdown('<div class="baslik">❄️ Kryoxz AI İnternet Asistanı</div>', unsafe_allow_html=True)
 
-API_KEY = "AIzaSyDmxRBi-9mKYVgkaO1NaNrhm_nk4x2cGds"
+API_KEY = "GEMINI_API_KEY"
 
 # 🔑 En Güvenli İstemci ve Sohbet Başlatma Mantığı
 if "chat" not in st.session_state:
