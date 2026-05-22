@@ -31,8 +31,11 @@ if prompt := st.chat_input("Kryoxz AI'a bir şeyler yazın..."):
             st.markdown(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
         except Exception as e:
-            # 429 hatası kota aşımıdır, kullanıcıya kibarca söyler
+            except Exception as e:
             if "429" in str(e):
-                st.warning("⚠️ Kota sınırı aşıldı. Lütfen 20 saniye bekleyip tekrar dene.")
+                st.warning("⚠️ Çok hızlı istek gönderildi. Sistem 60 saniye boyunca kendini soğutuyor...")
+                import time
+                time.sleep(60) # 1 dakika bekle
+                st.rerun() # Sayfayı otomatik yenile
             else:
                 st.error(f"Bir hata oluştu: {e}")
