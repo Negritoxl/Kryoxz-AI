@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+import google.genai as genai
 from google.genai import types
 
 # Web sayfasının sekme ayarları
